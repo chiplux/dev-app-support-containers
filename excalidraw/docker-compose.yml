@@ -1,0 +1,33 @@
+services:
+  excalidraw:
+    image: excalidraw/excalidraw:latest
+    container_name: excalidraw
+    ports:
+      - "${EXCALIDRAW_PORT:-3000}:80"
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+    volumes: []
+    networks:
+      - excalidraw-network
+
+  excalidraw-room:
+    image: excalidraw/excalidraw-room:latest
+    container_name: excalidraw-room
+    ports:
+      - "${EXCALIDRAW_ROOM_PORT:-8080}:80"
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - PORT=80
+    volumes: []
+    networks:
+      - excalidraw-network
+
+networks:
+  excalidraw-network:
+    driver: bridge

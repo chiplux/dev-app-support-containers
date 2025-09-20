@@ -1,0 +1,22 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - WEBSOCKET_ENABLED=${WEBSOCKET_ENABLED:-true}
+      - SIGNUPS_ALLOWED=${SIGNUPS_ALLOWED:-true}
+      - INVITATIONS_ALLOWED=${INVITATIONS_ALLOWED:-true}
+    volumes:
+      - ./data:/data
+    ports:
+      - "${HTTP_PORT:-8000}:${CONTAINER_PORT:-80}"
+      - "${WEBSOCKET_PORT:-3012}:${CONTAINER_WEBSOCKET_PORT:-3012}"
+    networks:
+      - vaultwarden-network
+
+networks:
+  vaultwarden-network:
+    driver: bridge

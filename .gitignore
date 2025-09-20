@@ -1,0 +1,7 @@
+*.log
+.env
+*.env
+vault-warden/data/
+*.sqlite3
+*.sqlite3-*
+*.pem
